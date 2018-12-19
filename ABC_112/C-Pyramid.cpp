@@ -24,7 +24,8 @@ int main(){
             for(int k=0; k<n; k++){
                 temp += abs(a[k].x - i) + abs(a[k].y - j) + a[k].h;
             }
-            //v.push_back((data){temp/n, i, j});
+            v.push_back((data){temp/n, i, j});
+            
         }
     }
 
