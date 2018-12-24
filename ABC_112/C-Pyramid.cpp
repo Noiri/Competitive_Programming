@@ -1,37 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct data {
-    int h, x, y;
-    bool operator<(const data& another) const {
-        if(h != another.h) return h < another.h;
-        if(x != another.x) return x < another.x;
-        return y < another.y;
-        }
-};
+typedef long long ll;
+int x[101], y[101], h[101];
 
-data a[101];
-
-int main(){
+int main() {
     int n;
     cin >> n;
-    for(int i=0; i<n; i++) cin >> a[i].x >> a[i].y >> a[i].h;
-
-    vector<data> v;
-    for(int i=0; i<101; i++){
-        for(int j=0; j<101; j++){
-            int temp = 0;
-            for(int k=0; k<n; k++){
-                temp += abs(a[k].x - i) + abs(a[k].y - j) + a[k].h;
-            }
-            v.push_back((data){temp/n, i, j});
-            
-        }
+    tuple<ll, ll, ll> G = make_tuple(-1, -1, -1);
+    for(int i=0; i<n; i++){
+        cin >> x[i] >> y[i] >> h[i];
+        if(h[i] >= 1) G = make_tuple(x[i], y[i], h[i]);
     }
 
-    sort(v.begin(), v.end());
-
-    for(int i=0; i<5; i++) cout << "h:" << v[i].h << " x:" << v[i].x << " y:" << v[i].y << endl;
-
-    return 0;
+    for(ll cx=0; cx<=100; cx++){
+        for(ll cy=0; cy<=100; cy++){
+            ll pred_h = get<2>(G) + abs(get<0>(G) - cx) + abs(get<1>(G) - cy);
+            pred_h = max(pred_h, 0LL);
+            bool flag = true;
+            for(int i=0; i<n; i++){
+                ll res = max(pred_h - abs(x[i] - cx) - abs(y[i] - cy), 0LL);
+                if(h[i] != res) flag = false;
+            }
+            if(flag){
+                cout << cx << " " << cy << " " << pred_h << endl;
+                return 0;
+            }
+        }
+    }
 }
