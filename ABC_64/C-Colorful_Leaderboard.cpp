@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//12min 2WA
+
 int main(){
     int n;
     cin >> n;
